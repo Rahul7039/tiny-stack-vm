@@ -1,14 +1,4 @@
-// A tiny stack virtual machine for make.fun's tiny stack ISA, version 1.
-// For every instance <id> in the input directory it runs <id>/program.bin on <id>/input.bin and
-// writes <id>/stdout.bin (exactly the bytes the program wrote) and <id>/exit.txt (its exit code:
-// 0 on HALT, the EXIT operand's low byte, or a trap's code). Values are 32-bit integers wrapping
-// modulo 2^32; the data stack holds at most 256 values, the call stack 64 return addresses,
-// memory 256 zeroed words; input is read byte by byte, -1 past its end; at most 1,000,000
-// instructions and 65,536 output bytes. A trap ends the program at once with its code, keeping
-// the output already written. Traps: 2 stack underflow, 3 stack overflow, 4 division by zero,
-// 5 unknown opcode, 6 memory range, 7 call stack overflow, 8 empty RET, 9 pc outside the
-// program or a cut-off immediate, 10 step limit, 11 output limit. Per step the checks fire in
-// that order.
+// Tiny stack VM.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
